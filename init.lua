@@ -179,6 +179,7 @@ vim.keymap.set('n', '<leader>n', vim.diagnostic.goto_next, { desc = 'Go to [N]ex
 vim.keymap.set('n', '<leader>m', vim.diagnostic.goto_prev, { desc = 'Go to previous ([M]) diagnostic' })
 
 
+
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
@@ -825,16 +826,14 @@ require('lazy').setup({
     --- @type blink.cmp.Config
     opts = {
       keymap = {
-        -- Custom keymap to use Tab/Shift-Tab for navigation
+        -- Custom keymap using Ctrl+n/Ctrl+p for navigation (Tab reserved for Copilot)
         preset = 'none',
-        ['<Tab>'] = { 'select_next', 'fallback' },
-        ['<S-Tab>'] = { 'select_prev', 'fallback' },
+        ['<C-n>'] = { 'select_next', 'fallback' },
+        ['<C-p>'] = { 'select_prev', 'fallback' },
         ['<CR>'] = { 'accept', 'fallback' },
         ['<C-y>'] = { 'accept' },
         ['<C-e>'] = { 'hide' },
         ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
-        ['<C-n>'] = { 'select_next', 'fallback' },
-        ['<C-p>'] = { 'select_prev', 'fallback' },
         ['<Up>'] = { 'select_prev', 'fallback' },
         ['<Down>'] = { 'select_next', 'fallback' },
         ['<C-k>'] = { 'show_documentation', 'hide_documentation' },
@@ -987,6 +986,7 @@ require('lazy').setup({
   -- require 'kickstart.plugins.indent_line',
   require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.copilot',
   -- require 'kickstart.plugins.avante',
   -- require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
