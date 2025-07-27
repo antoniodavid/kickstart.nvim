@@ -178,8 +178,6 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 vim.keymap.set('n', '<leader>n', vim.diagnostic.goto_next, { desc = 'Go to [N]ext diagnostic' })
 vim.keymap.set('n', '<leader>m', vim.diagnostic.goto_prev, { desc = 'Go to previous ([M]) diagnostic' })
 
-
-
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
@@ -308,7 +306,7 @@ require('lazy').setup({
     opts = {
       -- delay between pressing a key and opening which-key (milliseconds)
       -- this setting is independent of vim.o.timeoutlen
-      delay = 1000,
+      delay = 0,
       icons = {
         -- set icon mappings to true if you have a Nerd Font
         mappings = vim.g.have_nerd_font,
@@ -557,11 +555,11 @@ require('lazy').setup({
           -- Jump to the definition of the word under your cursor.
           --  This is where a variable was first declared, or where a function is defined, etc.
           --  To jump back, press <C-t>.
-          map('grd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+          map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [d]efinition')
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header.
-          map('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+          map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
           -- Fuzzy find all the symbols in your current document.
           --  Symbols are things like variables, functions, types, etc.
@@ -983,11 +981,11 @@ require('lazy').setup({
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
   -- require 'kickstart.plugins.debug',
-  -- require 'kickstart.plugins.indent_line',
+  require 'kickstart.plugins.indent_line',
   require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.copilot',
-  -- require 'kickstart.plugins.avante',
+  require 'kickstart.plugins.opencode',
   -- require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
@@ -1029,6 +1027,12 @@ require('lazy').setup({
 -- Ctrl-P for file finding (similar to popular plugins)
 local builtin = require 'telescope.builtin'
 vim.keymap.set('n', '<C-p>', builtin.find_files, { desc = 'Find files' })
+
+-- Move lines up/down with Ctrl-k/Ctrl-j
+vim.keymap.set('n', '<C-k>', ':move .-2<CR>==', { desc = 'Move line up', silent = true })
+vim.keymap.set('n', '<C-j>', ':move .+1<CR>==', { desc = 'Move line down', silent = true })
+vim.keymap.set('v', '<C-k>', ":move '<-2<CR>gv=gv", { desc = 'Move selection up', silent = true })
+vim.keymap.set('v', '<C-j>', ":move '>+1<CR>gv=gv", { desc = 'Move selection down', silent = true })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
